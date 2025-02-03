@@ -12,6 +12,7 @@ namespace ePizza.Repository.Concrete
     {
         public UserRepository(ePizzaHubDbContext dbContext) : base(dbContext)
         {
+
         }
     }
 }

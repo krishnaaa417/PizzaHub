@@ -1,4 +1,7 @@
 ﻿using ePizza.Core.Contracts;
+using ePizza.Core.Mappers;
+using ePizza.Models.Request;
+using ePizza.Models.Response;
 using ePizza.Repository.Contracts;
 using System;
 using System.Collections.Generic;
@@ -16,9 +19,34 @@ namespace ePizza.Core.Concrete
             _userRepository = userRepository;
         }
 
-        public void GetAllUsers()
+        public bool AddUser(CreateUserRequest userRequest)
         {
-          var users =   _userRepository.GetAll();
+            return true;
         }
+
+        public IEnumerable<UserResponseModel> GetAllUsers()
+        {
+            var users = _userRepository.GetAll().AsEnumerable();
+            return users.ConvertToUserResponseModelUsingLinq();
+        }
+
+        public UserResponseModel GetUserById(int id)
+        {
+            var users = _userRepository.GetAll().AsEnumerable().FirstOrDefault();
+            return users.ConvertToUserResponseModelUsingLinq();
+        }
+
+        //public void GetAllUsers()
+        //{
+        //  var users =   _userRepository.GetAll();
+        //}
     }
+
+    //public class EmployeeService : IUserService
+    //{
+    //    public void GetAllUsers()
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+    //}
 }

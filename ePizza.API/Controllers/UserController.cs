@@ -1,4 +1,5 @@
 ﻿using ePizza.Core.Contracts;
+using ePizza.Models.Request;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,11 +14,24 @@ namespace ePizza.API.Controllers
         {
             _userService = userService;
         }
+
         [HttpGet]
-        public IActionResult GetAction()
+        public async Task< IActionResult> GetAction()
         {
-            _userService.GetAllUsers();
-            return Ok();
+           var userresponse =  _userService.GetAllUsers();
+            return Ok(userresponse);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] CreateUserRequest createUserRequest)
+        {
+            if (ModelState.IsValid)
+            { 
+                var createuser = _userService.AddUser(createUserRequest);
+                return Ok();
+            }
+            return BadRequest(ModelState.Select(x => x.Key));
+
+        }
         }
     }
-}

@@ -1,5 +1,9 @@
 
+using ePizza.Core.Concrete;
+using ePizza.Core.Contracts;
 using ePizza.Domain.Models;
+using ePizza.Repository.Concrete;
+using ePizza.Repository.Contracts;
 using Microsoft.EntityFrameworkCore;
 
 namespace ePizza.API
@@ -14,6 +18,12 @@ namespace ePizza.API
 
             builder.Services.AddDbContext<ePizzaHubDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+           
+           // builder.Services.AddTransient<IUserService,EmployeeService>();
+            builder.Services.AddTransient<IUserService,UserService>(); //Registering the service dependencies
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
