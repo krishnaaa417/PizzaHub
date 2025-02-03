@@ -1,4 +1,7 @@
 
+using ePizza.Domain.Models;
+using Microsoft.EntityFrameworkCore;
+
 namespace ePizza.API
 {
     public class Program
@@ -8,6 +11,9 @@ namespace ePizza.API
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+
+            builder.Services.AddDbContext<ePizzaHubDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
