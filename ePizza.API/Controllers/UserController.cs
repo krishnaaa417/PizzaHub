@@ -15,6 +15,7 @@ namespace ePizza.API.Controllers
             _userService = userService;
         }
 
+        [Route("GetAction")]
         [HttpGet]
         public async Task< IActionResult> GetAction()
         {
@@ -22,6 +23,7 @@ namespace ePizza.API.Controllers
             return Ok(userresponse);
         }
 
+        [Route("Create")]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateUserRequest createUserRequest)
         {
@@ -33,5 +35,7 @@ namespace ePizza.API.Controllers
             return BadRequest(ModelState.Select(x => x.Key));
 
         }
+
+        
         }
     }
