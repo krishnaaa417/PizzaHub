@@ -21,8 +21,11 @@ namespace ePizza.API
 
            
            // builder.Services.AddTransient<IUserService,EmployeeService>();
-            builder.Services.AddTransient<IUserService,UserService>(); //Registering the service dependencies
+            builder.Services.AddScoped<IUserService,UserService>(); //Registering the service dependencies
             builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+           builder.Services.AddScoped<IitemService,ItemService>();
+            builder.Services.AddScoped<IItemRepository,ItemRepository>();
 
 
             builder.Services.AddControllers();
