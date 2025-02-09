@@ -12,5 +12,7 @@ namespace ePizza.Core.Contracts
     public interface IitemService 
     {
         IEnumerable<ItemResponse> GetAllItems();
+
+        Item AddItem(ItemRequest request);
     }
 }

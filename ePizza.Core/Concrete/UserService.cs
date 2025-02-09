@@ -22,6 +22,7 @@ namespace ePizza.Core.Concrete
         public bool AddUser(CreateUserRequest userRequest)
         {
             return true;
+            
         }
 
         public IEnumerable<UserResponseModel> GetAllUsers()

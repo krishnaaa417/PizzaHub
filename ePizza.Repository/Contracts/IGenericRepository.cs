@@ -11,5 +11,7 @@ namespace ePizza.Repository.Contracts
         void Add(T entity);
 
         IEnumerable<T> GetAll();
+
+        
     }
 }
