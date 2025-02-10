@@ -18,15 +18,21 @@ namespace ePizza.API
 
             builder.Services.AddDbContext<ePizzaHubDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+           // builder.Services.AddAutoMapper(typeof(MappingProfile));
 
-           
-           // builder.Services.AddTransient<IUserService,EmployeeService>();
+            // builder.Services.AddTransient<IUserService,EmployeeService>();
             builder.Services.AddScoped<IUserService,UserService>(); //Registering the service dependencies
             builder.Services.AddScoped<IUserRepository, UserRepository>();
 
-           builder.Services.AddScoped<IitemService,ItemService>();
+           
+            builder.Services.AddScoped<IitemService,ItemService>();
             builder.Services.AddScoped<IItemRepository,ItemRepository>();
 
+            builder.Services.AddScoped<IRolesRepository, RolesRepository>();
+           
+
+            
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

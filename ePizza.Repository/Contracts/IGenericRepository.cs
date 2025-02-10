@@ -12,6 +12,6 @@ namespace ePizza.Repository.Contracts
 
         IEnumerable<T> GetAll();
 
-        
+        int CommitChanges();
     }
 }

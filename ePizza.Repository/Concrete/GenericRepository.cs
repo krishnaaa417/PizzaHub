@@ -21,6 +21,11 @@ namespace ePizza.Repository.Concrete
            _ePizzaHubDbContext.Set<T>().Add(entity);
         }
 
+        public int CommitChanges()
+        {
+          return  _ePizzaHubDbContext.SaveChanges();
+        }
+
         public IEnumerable<T> GetAll()
         {
           return _ePizzaHubDbContext.Set<T>().ToList();
