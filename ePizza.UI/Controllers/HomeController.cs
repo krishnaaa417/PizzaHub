@@ -15,8 +15,8 @@ namespace ePizza.UI.Controllers
 
         public IActionResult Index()
         {
-            ViewData["message"] = "Welcome to ePizza!";
-            ViewBag.message = "Welcome to API ePizzaa..";
+            //ViewData["message"] = "Welcome to ePizza!";
+            ViewBag.message = "Hello Krishna...";
             return View();
         }
 

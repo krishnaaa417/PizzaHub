@@ -12,6 +12,7 @@ namespace ePizza.Repository.Concrete
     {
         public RolesRepository(ePizzaHubDbContext dbContext) : base(dbContext)
         {
+
         }
 
         //public void Add(User entity)

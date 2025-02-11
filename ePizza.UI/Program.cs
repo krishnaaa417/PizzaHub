@@ -9,6 +9,13 @@ namespace ePizza.UI
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            builder.Services.AddHttpClient("ePizzaApiClient", options =>
+            {
+                options.BaseAddress = new Uri(builder.Configuration["EPizzaApi:BaseAddress"]!);
+                options.DefaultRequestHeaders.Add("Accept", "application/json");
+            });
+             
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

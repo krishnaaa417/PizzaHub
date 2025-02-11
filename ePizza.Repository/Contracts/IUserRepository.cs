@@ -9,7 +9,7 @@ namespace ePizza.Repository.Contracts
 {
     public interface IUserRepository : IGenericRepository<User>
     {
-
+        User FindUser(string emailAddress);
 
     }
 }

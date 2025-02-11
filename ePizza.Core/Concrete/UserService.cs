@@ -18,22 +18,31 @@ namespace ePizza.Core.Concrete
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
-        public UserService(IUserRepository userRepository,IMapper mapper)
+        private readonly IRolesRepository _rolesRepository;
+        public UserService(IUserRepository userRepository,IMapper mapper,IRolesRepository rolesRepository)
         {
             _userRepository = userRepository;
             _mapper = mapper;
+            _rolesRepository = rolesRepository;
         }
 
         public bool AddUser(CreateUserRequest userRequest)
         {
+            // need to convert createuserrequest model to user model looks like repo model
+           // var roles = _userRepository.GetAll().Where(x => x.Name == "User").FirstOrDefault();
+           var roles = _rolesRepository.GetAll().Where(x => x.Name == "User").FirstOrDefault();
             //refactoring..
-            var roles = _userRepository.GetAll().Select(x => x.Id == 2);
-            var userDetails = _mapper.Map<User>(userRequest);
-            userDetails.Password = BCrypt.Net.BCrypt.HashPassword(userDetails.Password);
-            _userRepository.Add(userDetails);
-         int rowsAffected =    _userRepository.CommitChanges();
-            return rowsAffected > 0;
-            //return true;
+            if ( roles!= null)
+            {
+                
+                var userDetails = _mapper.Map<User>(userRequest);
+                userDetails.Roles.Add(roles);
+                userDetails.Password = BCrypt.Net.BCrypt.HashPassword(userDetails.Password);
+                _userRepository.Add(userDetails);
+                int rowsAffected = _userRepository.CommitChanges();
+                return rowsAffected > 0;
+            }
+            return false;
         }
 
         public IEnumerable<UserResponseModel> GetAllUsers()
@@ -50,6 +59,12 @@ namespace ePizza.Core.Concrete
             var users = _userRepository.GetAll().AsEnumerable().FirstOrDefault();
             return users.ConvertToUserResponseModelUsingLinq();
         }
+
+
+
+
+
+
 
         //public void GetAllUsers()
         //{

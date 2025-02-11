@@ -23,9 +23,9 @@ namespace ePizza.API.Controllers
             return Ok(userresponse);
         }
 
-        [Route("Create")]
+        
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateUserRequest createUserRequest)
+        public async Task<IActionResult> Create([FromBody]CreateUserRequest createUserRequest)
         {
             if (ModelState.IsValid)
             { 

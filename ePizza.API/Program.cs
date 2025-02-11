@@ -30,6 +30,10 @@ namespace ePizza.API
             builder.Services.AddScoped<IItemRepository,ItemRepository>();
 
             builder.Services.AddScoped<IRolesRepository, RolesRepository>();
+           // builder.Services.AddScoped<IRolesService, RolesService>();
+
+            builder.Services.AddScoped<IAuthService, AuthService>();
+            
            
 
             

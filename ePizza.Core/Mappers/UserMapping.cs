@@ -15,9 +15,10 @@ namespace ePizza.Core.Mappers
         public UserMapping()
         {
             CreateMap<User,UserResponseModel>()
-                .ForMember(dest => dest.Id,src => src.MapFrom(src =>src.Id))
+                .ForMember(dest => dest.Id,src => src.MapFrom(x =>x.Id))
                 .ReverseMap();
-            CreateMap<User, CreateUserRequest>();
+            CreateMap<CreateUserRequest,User>();
+            //
         }
     }
 }
