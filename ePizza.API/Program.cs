@@ -1,10 +1,14 @@
 
 using ePizza.Core.Concrete;
 using ePizza.Core.Contracts;
+using ePizza.Core.Utils;
 using ePizza.Domain.Models;
 using ePizza.Repository.Concrete;
 using ePizza.Repository.Contracts;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace ePizza.API
 {
@@ -22,6 +26,7 @@ namespace ePizza.API
            // builder.Services.AddAutoMapper(typeof(MappingProfile));
 
             // builder.Services.AddTransient<IUserService,EmployeeService>();
+            builder.Services.AddSingleton<TokenGenerator>();
             builder.Services.AddScoped<IUserService,UserService>(); //Registering the service dependencies
             builder.Services.AddScoped<IUserRepository, UserRepository>();
 
@@ -35,7 +40,18 @@ namespace ePizza.API
             builder.Services.AddScoped<IAuthService, AuthService>();
             
            
-
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"]!)),
+                    ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                    ValidAudience = builder.Configuration["Jwt:Audience"],
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
             
 
             builder.Services.AddControllers();
@@ -54,6 +70,7 @@ namespace ePizza.API
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 

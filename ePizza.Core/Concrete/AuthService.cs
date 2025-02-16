@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ePizza.Core.Contracts;
+using ePizza.Models.Response;
 using ePizza.Repository.Contracts;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace ePizza.Core.Concrete
 
         }
 
-        public bool ValidateUser(string username, string password)
+        public ValidateUserResponse ValidateUser(string username, string password)
         {
             var userDetails = _userRepository.FindUser(username); //if user exists or not
             if (userDetails != null)
@@ -28,10 +29,15 @@ namespace ePizza.Core.Concrete
                 bool isValidPassword = BCrypt.Net.BCrypt.Verify(password,userDetails.Password);
                 if (isValidPassword)
                 {
-                    return true;
+                    return new ValidateUserResponse()
+                    {
+                        Email = username,
+                        Name = userDetails.Name,
+                        Roles = userDetails.Roles.Select(x => x.Name).ToList(),
+                    };
                 }
             }
-            return false;   
+            return new ValidateUserResponse();   
         }
     }
 }
