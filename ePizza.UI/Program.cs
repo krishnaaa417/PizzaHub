@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+
 namespace ePizza.UI
 {
     public class Program
@@ -8,6 +10,15 @@ namespace ePizza.UI
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+             .AddCookie(options =>
+             {
+                 options.LoginPath = "/Login/Login";
+                 options.LogoutPath = "/Login/Logout";
+             });
+
+            builder.Services.AddAuthorization();
 
             builder.Services.AddHttpClient("ePizzaApiClient", options =>
             {
@@ -31,6 +42,7 @@ namespace ePizza.UI
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
